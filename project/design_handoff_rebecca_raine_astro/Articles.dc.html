@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Lato:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>body { margin: 0; } a { color: inherit; }</style>
+</helmet>
+<div style="--bg:oklch(97.5% 0.012 75);--ink:oklch(21% 0.02 55);--muted:oklch(48% 0.018 55);--primary:#8e0000;--primary-hover:#050101;--primary-ultra-light:#fbe9e9;--primary-ultra-dark:#2b0808;--primary-light:#f4bebe;--white:#fff;--black:#000;--accent:var(--primary);--card:oklch(99% 0.006 75);--line:oklch(89% 0.014 70);font-family:'Lato',sans-serif;color:var(--ink);background:var(--bg);height:100vh;display:flex;overflow:hidden;">
+
+  <aside style="width:240px;flex:0 0 240px;height:100vh;background:linear-gradient(160deg, var(--primary-ultra-dark), var(--primary));display:flex;flex-direction:column;justify-content:space-between;padding:40px 28px;box-sizing:border-box;">
+    <div style="text-align:center;">
+      <a href="Home.dc.html" style="display:block;margin-bottom:52px;">
+        <img src="uploads/rebeccaraine-logo-wm-inv.svg" alt="Rebecca Raine Logo" style="width:80%;display:block;margin:0 auto;">
+      </a>
+      <nav style="display:flex;flex-direction:column;align-items:center;gap:22px;font-family:'Playfair Display',serif;">
+        <a href="Books.dc.html" style="text-decoration:none;font-size:15px;font-weight:500;color:rgba(255,255,255,0.8);" style-hover="color:#fff;">Books</a>
+        <a href="Articles.dc.html" style="text-decoration:none;font-size:15px;font-weight:700;color:#fff;">Articles</a>
+        <a href="Home.dc.html#contact" style="text-decoration:none;font-size:15px;font-weight:500;color:rgba(255,255,255,0.8);" style-hover="color:#fff;">Contact</a>
+      </nav>
+    </div>
+    <div>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button onClick="{{ openNewsletter }}" title="Newsletter" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);border:none;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;cursor:pointer;padding:0;line-height:1;">✉</button>
+        <a href="https://www.instagram.com/rebeccarainewriter/" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-decoration:none;">IG</a>
+        <a href="https://www.facebook.com/groups/450722123168970" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-decoration:none;">FB</a>
+        <a href="https://www.goodreads.com/rainewriter" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-decoration:none;">GR</a>
+      </div>
+      <p style="font-size:11px;color:rgba(255,255,255,0.65);margin:14px 0 0;text-align:center;">© Rebecca Raine. All rights reserved.</p>
+    </div>
+  </aside>
+
+  <main style="flex:1;height:100vh;overflow-y:auto;">
+
+    <section style="max-width:1080px;margin:0 auto;padding:56px 40px 20px;">
+      <p style="text-transform:uppercase;letter-spacing:0.18em;font-size:13px;color:var(--accent);font-weight:600;margin:0 0 12px;">Notes from the desk</p>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,44px);font-weight:600;margin:0;">Articles</h1>
+    </section>
+
+    <section style="max-width:1080px;margin:0 auto;padding:20px 40px 40px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:36px;">
+        <sc-for list="{{ articles }}" as="a" hint-placeholder-count="9">
+          <a href="ArticleDetail.dc.html" style="text-decoration:none;color:var(--ink);display:block;">
+            <image-slot id="articles-img-{{ $index }}" shape="rect" placeholder="{{ a.title }} — photo" style="width:100%;aspect-ratio:3/2;margin-bottom:16px;"></image-slot>
+            <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;margin:0 0 8px;line-height:1.3;">{{ a.title }}</h3>
+            <p style="font-size:14px;line-height:1.6;color:var(--muted);margin:0 0 10px;">{{ a.excerpt }}</p>
+            <span style="font-size:13px;font-weight:600;color:var(--accent);">Read More</span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <nav style="max-width:1080px;margin:0 auto;padding:0 40px 90px;display:flex;gap:10px;justify-content:center;align-items:center;font-size:14px;font-weight:600;">
+      <span style="width:34px;height:34px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;">1</span>
+      <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-decoration:none;">2</a>
+      <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-decoration:none;">3</a>
+      <span style="color:var(--muted);">&hellip;</span>
+      <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-decoration:none;">6</a>
+      <a href="#" style="text-decoration:none;margin-left:8px;color:var(--muted);">Next &raquo;</a>
+    </nav>
+
+  </main>
+
+  <sc-if value="{{ newsletterOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:oklch(20% 0.02 55 / 0.55);display:flex;align-items:center;justify-content:center;z-index:100;" onClick="{{ closeNewsletter }}">
+      <div style="background:var(--bg);border-radius:6px;padding:40px;max-width:420px;width:90%;position:relative;" onClick="{{ stopPropagation }}">
+        <button onClick="{{ closeNewsletter }}" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;">&times;</button>
+        <p style="font-weight:600;font-size:19px;margin:0 0 8px;font-family:'Playfair Display',serif;">Subscribe to my newsletter</p>
+        <p style="font-size:14px;color:var(--muted);margin:0 0 20px;">Join my mailing list to receive the latest news and updates.</p>
+        <form style="display:flex;flex-direction:column;gap:12px;" onsubmit="return false;">
+          <input type="text" placeholder="Name" style="padding:12px 14px;border:1px solid var(--line);border-radius:2px;font-size:14px;font-family:inherit;background:white;">
+          <input type="email" placeholder="Email" style="padding:12px 14px;border:1px solid var(--line);border-radius:2px;font-size:14px;font-family:inherit;background:white;">
+          <button type="submit" style="background:var(--accent);color:white;border:none;padding:12px;border-radius:2px;font-size:14px;font-weight:600;cursor:pointer;">Subscribe</button>
+        </form>
+        <p style="font-size:12px;color:var(--muted);margin:16px 0 0;">I solemnly swear that I will not give your email address to anyone else. Ever.</p>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { newsletterOpen: false };
+  renderVals() {
+    return {
+      newsletterOpen: this.state.newsletterOpen,
+      openNewsletter: () => this.setState({ newsletterOpen: true }),
+      closeNewsletter: () => this.setState({ newsletterOpen: false }),
+      stopPropagation: (e) => e.stopPropagation(),
+      articles: [
+        { title: "Surrounded in Solitude", excerpt: "In many ways, the life of a writer is a lonely one. I sit alone with my pen and paper and let go of reality in favour of forays into imaginary worlds." },
+        { title: "My Favourite Books of 2022", excerpt: "At the start of every year, I love to look back at all the books I've read over the previous 12 months and wax lyrical about the ones I loved most." },
+        { title: "Books That Changed My Life: Shifting Gears", excerpt: "Some books you enjoy. Some books you rave about. Then there are the books that come into your life at exactly the right moment." },
+        { title: "Everything I Know About Writing I Learned From FanFiction", excerpt: "I read a lot of books before I became a writer. But it wasn't until I started to read fanfiction that I picked up a pen of my own." },
+        { title: "Less Than Avid", excerpt: "For many authors, seeing their words in print is the culmination of a childhood dream. I kind of wish I could count myself among them." },
+        { title: "You're A What Now?", excerpt: "Writers write. New and experienced writers alike are confronted with two words on a regular basis, and they're not always welcome." },
+        { title: "The Characters Who Sneak Up On You", excerpt: "Toni Fairweather was never supposed to have a happy ending. He was only ever meant to be a throwaway side character." },
+        { title: "Soundtrack: Bona Fide Fake", excerpt: "Every story comes with its own soundtrack, and Bona Fide Fake was no different. Here's the music that inspired Toni and Ned's story." },
+        { title: "My Favourite Books of 2021", excerpt: "Every January, I like to take a moment to revisit the books I read for the first time in the previous year and pick my favourites." }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

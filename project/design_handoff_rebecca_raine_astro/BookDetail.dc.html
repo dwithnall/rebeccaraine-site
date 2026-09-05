@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Lato:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>body { margin: 0; } a { color: inherit; }</style>
+</helmet>
+<div style="--bg:oklch(97.5% 0.012 75);--ink:oklch(21% 0.02 55);--muted:oklch(48% 0.018 55);--primary:#8e0000;--primary-hover:#050101;--primary-ultra-light:#fbe9e9;--primary-ultra-dark:#2b0808;--primary-light:#f4bebe;--white:#fff;--black:#000;--accent:var(--primary);--card:oklch(99% 0.006 75);--line:oklch(89% 0.014 70);font-family:'Lato',sans-serif;color:var(--ink);background:var(--bg);height:100vh;display:flex;overflow:hidden;">
+
+  <aside style="width:240px;flex:0 0 240px;height:100vh;background:linear-gradient(160deg, var(--primary-ultra-dark), var(--primary));display:flex;flex-direction:column;justify-content:space-between;padding:40px 28px;box-sizing:border-box;">
+    <div style="text-align:center;">
+      <a href="Home.dc.html" style="display:block;margin-bottom:52px;">
+        <img src="uploads/rebeccaraine-logo-wm-inv.svg" alt="Rebecca Raine Logo" style="width:80%;display:block;margin:0 auto;">
+      </a>
+      <nav style="display:flex;flex-direction:column;align-items:center;gap:22px;font-family:'Playfair Display',serif;">
+        <a href="Books.dc.html" style="text-decoration:none;font-size:15px;font-weight:700;color:#fff;">Books</a>
+        <a href="Articles.dc.html" style="text-decoration:none;font-size:15px;font-weight:500;color:rgba(255,255,255,0.8);" style-hover="color:#fff;">Articles</a>
+        <a href="Home.dc.html#contact" style="text-decoration:none;font-size:15px;font-weight:500;color:rgba(255,255,255,0.8);" style-hover="color:#fff;">Contact</a>
+      </nav>
+    </div>
+    <div>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button onClick="{{ openNewsletter }}" title="Newsletter" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);border:none;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;cursor:pointer;padding:0;line-height:1;">✉</button>
+        <a href="https://www.instagram.com/rebeccarainewriter/" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-decoration:none;">IG</a>
+        <a href="https://www.facebook.com/groups/450722123168970" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-decoration:none;">FB</a>
+        <a href="https://www.goodreads.com/rainewriter" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-decoration:none;">GR</a>
+      </div>
+      <p style="font-size:11px;color:rgba(255,255,255,0.65);margin:14px 0 0;text-align:center;">© Rebecca Raine. All rights reserved.</p>
+    </div>
+  </aside>
+
+  <main style="flex:1;height:100vh;overflow-y:auto;">
+
+    <div style="max-width:1080px;margin:0 auto;padding:24px 40px 0;">
+      <a href="Books.dc.html" style="text-decoration:none;font-size:13px;font-weight:600;color:var(--muted);">&larr; All Books</a>
+    </div>
+
+    <section style="max-width:1080px;margin:0 auto;padding:28px 40px 60px;display:grid;grid-template-columns:minmax(200px,280px) 1fr;gap:52px;">
+      <div>
+        <img src="uploads/The_Deviation-CoverArt.webp" alt="The Deviation — cover art" style="width:100%;aspect-ratio:2/3;object-fit:cover;display:block;margin-bottom:24px;">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="https://www.amazon.com/dp/B0G2TYT7QC" style="background:var(--accent);color:white;text-align:center;padding:13px;border-radius:2px;text-decoration:none;font-size:14px;font-weight:600;">Amazon</a>
+          <a href="https://www.goodreads.com/book/show/244137006" style="border:1px solid var(--line);text-align:center;padding:13px;border-radius:2px;text-decoration:none;font-size:14px;font-weight:600;">Goodreads</a>
+        </div>
+      </div>
+      <div>
+        <p style="text-transform:uppercase;letter-spacing:0.08em;font-size:12px;color:var(--accent);font-weight:600;margin:0 0 10px;">Experimental Love #3</p>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,40px);font-weight:600;margin:0 0 16px;">The Deviation</h1>
+        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--muted);margin:0 0 28px;">When my quiet life fell apart, he turned up the music in my soul. How do I pretend we never happened?</p>
+
+        <p style="font-weight:600;font-size:15px;margin:0 0 6px;">Johnny</p>
+        <p style="font-size:15px;line-height:1.75;margin:0 0 20px;">I did everything my parents wanted: got a respectable job, married my childhood sweetheart, and pushed my rock star dreams into the background. It was enough for me… until my divorce cracked open the cage.</p>
+        <p style="font-size:15px;line-height:1.75;margin:0 0 20px;">Now old cravings rush to the surface, and I ache to satisfy each one. Starting with the gorgeous man I lock eyes with at a music festival. Calum is all kinds of perfect. As a manager, he could accelerate my music career. As a man, he reignites the fire in my soul. I can't have him both ways.</p>
+        <p style="font-size:15px;line-height:1.75;margin:0 0 26px;">When my band signs with Calum's company, we agree to keep our distance. No one can know we've met before. How far we've gone. How deeply we've tasted. Our futures depend on the secrets we keep.</p>
+
+        <p style="font-weight:600;font-size:15px;margin:0 0 6px;">Calum</p>
+        <p style="font-size:15px;line-height:1.75;margin:0 0 20px;">If I'd known who Johnny was the night we met, this never would have happened. Getting involved with a client is forbidden, and I can't risk my job — or my sister's security — for some lust-fuelled romance.</p>
+        <p style="font-size:15px;line-height:1.75;margin:0;">Working together doesn't have to be complicated. That's what I tell myself every time we avoid touching. When his eyes tease, and his lyrics seduce. As our professional successes mount, the connection between us only grows stronger. There are lines we can't cross. Boundaries we can't break. But when Johnny is all I want, all I think about… how do I stay away?</p>
+      </div>
+    </section>
+
+    <section style="max-width:780px;margin:0 auto;padding:0 40px 90px;">
+      <h2 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 24px;">Peek Inside...</h2>
+      <div style="background:var(--card);border:1px solid var(--line);border-radius:4px;padding:36px;">
+        <p style="font-size:15px;line-height:1.8;color:var(--ink);margin:0 0 18px;">Johnny ambles over to invade my personal space. The warm, freshly showered scent of him creeps into my nostrils, causing me to inhale, but I don't shy away from his closeness. He's in a dangerous mood. If I show weakness, he may pounce.</p>
+        <p style="font-size:15px;line-height:1.8;color:var(--ink);margin:0 0 18px;">"Would you like a drink?" he asks, gesturing with the tumbler that dangles from his fingers.</p>
+        <p style="font-size:15px;line-height:1.8;color:var(--ink);margin:0;">"Sure." It's a terrible idea, but at the moment I'll say yes to anything that will put some distance between us…</p>
+      </div>
+      <p style="text-align:center;margin:32px 0 0;font-size:14px;color:var(--muted);">Read it now on <a href="https://www.amazon.com/dp/B0G2TYT7QC" style="color:var(--accent);font-weight:600;text-decoration:none;">Amazon Kindle and Kindle Unlimited</a></p>
+    </section>
+
+  </main>
+
+  <sc-if value="{{ newsletterOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:oklch(20% 0.02 55 / 0.55);display:flex;align-items:center;justify-content:center;z-index:100;" onClick="{{ closeNewsletter }}">
+      <div style="background:var(--bg);border-radius:6px;padding:40px;max-width:420px;width:90%;position:relative;" onClick="{{ stopPropagation }}">
+        <button onClick="{{ closeNewsletter }}" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;">&times;</button>
+        <p style="font-weight:600;font-size:19px;margin:0 0 8px;font-family:'Playfair Display',serif;">Subscribe to my newsletter</p>
+        <p style="font-size:14px;color:var(--muted);margin:0 0 20px;">Join my mailing list to receive the latest news and updates.</p>
+        <form style="display:flex;flex-direction:column;gap:12px;" onsubmit="return false;">
+          <input type="text" placeholder="Name" style="padding:12px 14px;border:1px solid var(--line);border-radius:2px;font-size:14px;font-family:inherit;background:white;">
+          <input type="email" placeholder="Email" style="padding:12px 14px;border:1px solid var(--line);border-radius:2px;font-size:14px;font-family:inherit;background:white;">
+          <button type="submit" style="background:var(--accent);color:white;border:none;padding:12px;border-radius:2px;font-size:14px;font-weight:600;cursor:pointer;">Subscribe</button>
+        </form>
+        <p style="font-size:12px;color:var(--muted);margin:16px 0 0;">I solemnly swear that I will not give your email address to anyone else. Ever.</p>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { newsletterOpen: false };
+  renderVals() {
+    return {
+      newsletterOpen: this.state.newsletterOpen,
+      openNewsletter: () => this.setState({ newsletterOpen: true }),
+      closeNewsletter: () => this.setState({ newsletterOpen: false }),
+      stopPropagation: (e) => e.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>

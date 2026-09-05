@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Lato:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>body { margin: 0; } a { color: inherit; }</style>
+</helmet>
+<div style="--bg:oklch(97.5% 0.012 75);--ink:oklch(21% 0.02 55);--muted:oklch(48% 0.018 55);--primary:#8e0000;--primary-hover:#050101;--primary-ultra-light:#fbe9e9;--primary-ultra-dark:#2b0808;--primary-light:#f4bebe;--white:#fff;--black:#000;--accent:var(--primary);--card:oklch(99% 0.006 75);--line:oklch(89% 0.014 70);font-family:'Lato',sans-serif;color:var(--ink);background:var(--bg);height:100vh;display:flex;overflow:hidden;">
+
+  <aside style="width:240px;flex:0 0 240px;height:100vh;background:linear-gradient(160deg, var(--primary-ultra-dark), var(--primary));display:flex;flex-direction:column;justify-content:space-between;padding:40px 28px;box-sizing:border-box;">
+    <div style="text-align:center;">
+      <a href="Home.dc.html" style="display:block;margin-bottom:52px;">
+        <img src="uploads/rebeccaraine-logo-wm-inv.svg" alt="Rebecca Raine Logo" style="width:80%;display:block;margin:0 auto;">
+      </a>
+      <nav style="display:flex;flex-direction:column;align-items:center;gap:22px;font-family:'Playfair Display',serif;">
+        <a href="Books.dc.html" style="text-decoration:none;font-size:15px;font-weight:700;color:#fff;">Books</a>
+        <a href="Articles.dc.html" style="text-decoration:none;font-size:15px;font-weight:500;color:rgba(255,255,255,0.8);" style-hover="color:#fff;">Articles</a>
+        <a href="Home.dc.html#contact" style="text-decoration:none;font-size:15px;font-weight:500;color:rgba(255,255,255,0.8);" style-hover="color:#fff;">Contact</a>
+      </nav>
+    </div>
+    <div>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button onClick="{{ openNewsletter }}" title="Newsletter" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);border:none;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;cursor:pointer;padding:0;line-height:1;">✉</button>
+        <a href="https://www.instagram.com/rebeccarainewriter/" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-decoration:none;">IG</a>
+        <a href="https://www.facebook.com/groups/450722123168970" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-decoration:none;">FB</a>
+        <a href="https://www.goodreads.com/rainewriter" style="width:32px;height:32px;border-radius:50%;background:white;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-decoration:none;">GR</a>
+      </div>
+      <p style="font-size:11px;color:rgba(255,255,255,0.65);margin:14px 0 0;text-align:center;">© Rebecca Raine. All rights reserved.</p>
+    </div>
+  </aside>
+
+  <main style="flex:1;height:100vh;overflow-y:auto;">
+
+    <section style="max-width:1080px;margin:0 auto;padding:56px 40px 20px;">
+      <p style="text-transform:uppercase;letter-spacing:0.18em;font-size:13px;color:var(--accent);font-weight:600;margin:0 0 12px;">Bibliography</p>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,44px);font-weight:600;margin:0;">Books</h1>
+    </section>
+
+    <section style="max-width:1080px;margin:0 auto;padding:0 40px 24px;">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+        <label style="font-size:13px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;gap:6px;">Series
+          <select onChange="{{ onSeriesChange }}" value="{{ seriesFilter }}" style="padding:9px 12px;border:1px solid var(--line);border-radius:2px;font-size:14px;font-family:inherit;background:white;color:var(--ink);">
+            <sc-for list="{{ seriesOptions }}" as="s" hint-placeholder-count="5"><option value="{{ s }}">{{ s }}</option></sc-for>
+          </select>
+        </label>
+        <label style="font-size:13px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;gap:6px;">Tropes
+          <select onChange="{{ onTropeChange }}" value="{{ tropeFilter }}" style="padding:9px 12px;border:1px solid var(--line);border-radius:2px;font-size:14px;font-family:inherit;background:white;color:var(--ink);">
+            <sc-for list="{{ tropeOptions }}" as="t" hint-placeholder-count="8"><option value="{{ t }}">{{ t }}</option></sc-for>
+          </select>
+        </label>
+        <div style="display:flex;gap:10px;align-items:center;margin-left:auto;">
+          <span style="font-size:13px;font-weight:600;color:var(--muted);">Sort</span>
+          <button onClick="{{ onSortOrder }}" style="display:flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--line);border-radius:2px;font-size:13px;font-weight:600;background:white;color:var(--ink);cursor:pointer;">
+            <span aria-hidden="true">☰</span> Series Order <span>{{ orderArrow }}</span>
+          </button>
+          <button onClick="{{ onSortDate }}" style="display:flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--line);border-radius:2px;font-size:13px;font-weight:600;background:white;color:var(--ink);cursor:pointer;">
+            <span aria-hidden="true">▦</span> Release Date <span>{{ dateArrow }}</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1080px;margin:0 auto;padding:0 40px 100px;">
+      <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:40px;">
+          <sc-for list="{{ filteredBooks }}" as="b" hint-placeholder-count="11">
+            <div>
+              <a href="BookDetail.dc.html" style="display:block;margin-bottom:16px;">
+                <img src="{{ b.cover }}" alt="{{ b.title }} — cover art" style="width:100%;aspect-ratio:2/3;object-fit:cover;display:block;">
+              </a>
+              <p style="text-transform:uppercase;letter-spacing:0.08em;font-size:12px;color:var(--accent);font-weight:600;margin:0 0 6px;">{{ b.series }}</p>
+              <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;margin:0 0 8px;line-height:1.3;"><a href="BookDetail.dc.html" style="text-decoration:none;">{{ b.title }}</a></h3>
+              <p style="font-size:14px;line-height:1.6;color:var(--muted);margin:0 0 12px;">{{ b.blurb }}</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">
+                <sc-for list="{{ b.tropes }}" as="tr" hint-placeholder-count="2">
+                  <span style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--primary-ultra-light);color:var(--primary);">{{ tr }}</span>
+                </sc-for>
+              </div>
+              <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:13px;font-weight:600;">
+                <a href="BookDetail.dc.html" style="text-decoration:none;color:var(--accent);">More</a>
+                <a href="{{ b.amazon }}" style="text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px;">Amazon</a>
+                <a href="{{ b.goodreads }}" style="text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px;">Goodreads</a>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+        <p style="color:var(--muted);font-size:15px;padding:40px 0;text-align:center;">No books match those filters.</p>
+      </sc-if>
+    </section>
+
+  </main>
+
+  <sc-if value="{{ newsletterOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:oklch(20% 0.02 55 / 0.55);display:flex;align-items:center;justify-content:center;z-index:100;" onClick="{{ closeNewsletter }}">
+      <div style="background:var(--bg);border-radius:6px;padding:40px;max-width:420px;width:90%;position:relative;" onClick="{{ stopPropagation }}">
+        <button onClick="{{ closeNewsletter }}" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;">&times;</button>
+        <p style="font-weight:600;font-size:19px;margin:0 0 8px;font-family:'Playfair Display',serif;">Subscribe to my newsletter</p>
+        <p style="font-size:14px;color:var(--muted);margin:0 0 20px;">Join my mailing list to receive the latest news and updates.</p>
+        <form style="display:flex;flex-direction:column;gap:12px;" onsubmit="return false;">
+          <input type="text" placeholder="Name" style="padding:12px 14px;border:1px solid var(--line);border-radius:2px;font-size:14px;font-family:inherit;background:white;">
+          <input type="email" placeholder="Email" style="padding:12px 14px;border:1px solid var(--line);border-radius:2px;font-size:14px;font-family:inherit;background:white;">
+          <button type="submit" style="background:var(--accent);color:white;border:none;padding:12px;border-radius:2px;font-size:14px;font-weight:600;cursor:pointer;">Subscribe</button>
+        </form>
+        <p style="font-size:12px;color:var(--muted);margin:16px 0 0;">I solemnly swear that I will not give your email address to anyone else. Ever.</p>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { newsletterOpen: false, seriesFilter: "All", tropeFilter: "All", sortBy: "order", sortDir: "asc" };
+  books = [
+    { title: "The Deviation", series: "Experimental Love #3", order: 10, releaseYear: 2025, tropes: ["Forbidden Romance", "Musician Hero"], blurb: "When my quiet life fell apart, he turned up the music in my soul. How do I pretend we never happened?", amazon: "https://www.amazon.com/dp/B0G2TYT7QC", goodreads: "https://www.goodreads.com/book/show/244137006", cover: "uploads/The_Deviation-CoverArt.webp" },
+    { title: "Bona Fide Fake", series: "Experimental Love #2", order: 9, releaseYear: 2022, tropes: ["Fake Relationship"], blurb: "My new fake boyfriend may not like me, but he needs me. There are worse foundations for a relationship.", amazon: "https://www.amazon.com/dp/B09PZXZ3Q8", goodreads: "https://www.goodreads.com/book/show/59907012", cover: "uploads/Bona_Fide_Fake-CoverArt.webp" },
+    { title: "The Harder We Fall", series: "Standalone", order: 11, releaseYear: 2021, tropes: ["Second Chance"], blurb: "For years, I've been bound by sleeplessness and sorrow. His voice threatens to set me free.", amazon: "https://www.amazon.com/dp/B0915LKFPQ/", goodreads: "https://www.goodreads.com/book/show/57177502-the-harder-we-fall", cover: "uploads/The_Harder_We_Fall-CoverArt.webp" },
+    { title: "The Experiment", series: "Experimental Love #1", order: 8, releaseYear: 2020, tropes: ["Friends to Lovers", "Sexuality Awakening"], blurb: "When a single kiss calls your sexuality into question, there's only one sure path to a reliable answer: further research.", amazon: "https://www.amazon.com/dp/B08FB1JL3R", goodreads: "https://www.goodreads.com/book/show/54540655-the-experiment", cover: "uploads/The_Experiment-CoverArt.webp" },
+    { title: "Becoming Us", series: "Return To You #2", order: 7, releaseYear: 2020, tropes: ["Love Triangle"], blurb: "She's the woman I've always loved. He's the man I've never stopped wanting. Who says I can't have everything?", amazon: "https://www.amazon.com/dp/B07ZHV3P94/", goodreads: "https://www.goodreads.com/book/show/48568939-becoming-us", cover: "uploads/Becoming_Us-CoverArt.webp" },
+    { title: "Finding Grey", series: "Return To You #1", order: 6, releaseYear: 2019, tropes: ["Rock Star", "Age Gap"], blurb: "When being seduced by a rock star, only a fool falls in love.", amazon: "https://www.amazon.com/dp/B07NVX1RJ4", goodreads: "https://www.goodreads.com/book/show/44057225-finding-grey", cover: "uploads/Finding_Gray-CoverArt.webp" },
+    { title: "All the Broken Pieces", series: "Finding Forever #5", order: 5, releaseYear: 2018, tropes: ["Slow Burn"], blurb: "Sometimes letting your heart set the rules is a good way to lose your mind.", amazon: "https://www.amazon.com/dp/B07CTJ539S/", goodreads: "https://www.goodreads.com/book/show/60094484-all-the-broken-pieces", cover: "uploads/All_the_Broken_Pieces-CoverArt.webp" },
+    { title: "Everything We Need", series: "Finding Forever #4", order: 4, releaseYear: 2017, tropes: ["Menage"], blurb: "The path to true love may not begin with a threesome, but you have to start somewhere.", amazon: "https://www.amazon.com/dp/B0764DJKZX/", goodreads: "https://www.goodreads.com/book/show/60094534-everything-we-need", cover: "uploads/Everything_We_Need-CoverArt.webp" },
+    { title: "This Time Forever", series: "Finding Forever #3", order: 3, releaseYear: 2016, tropes: ["Enemies to Lovers"], blurb: "She wants him to want her — desperately — but without the inconvenience of wanting him back.", amazon: "https://www.amazon.com/dp/B01N1RXA5Y", goodreads: "https://www.goodreads.com/book/show/60094562-this-time-forever", cover: "uploads/This_Time_Forever-CoverArt.webp" },
+    { title: "Lost in Amber", series: "Finding Forever #2", order: 2, releaseYear: 2016, tropes: ["Second Chance"], blurb: "True love should always come with a convenient expiry date.", amazon: "https://www.amazon.com/dp/B01LBBQJWE/", goodreads: "https://www.goodreads.com/book/show/60094564-lost-in-amber", cover: "uploads/Lost_In_Amber-CoverArt.webp" },
+    { title: "Our Little Secret", series: "Finding Forever #1", order: 1, releaseYear: 2016, tropes: ["Menage"], blurb: "How does a sensible, modern woman indulge in a three-way relationship without getting all tangled up?", amazon: "https://www.amazon.com/dp/B01BGAAQUQ", goodreads: "https://www.goodreads.com/book/show/28931039-our-little-secret", cover: "uploads/Out_Little_Secret-CoverArt.webp" }
+  ];
+  renderVals() {
+    const { seriesFilter, tropeFilter, sortBy, sortDir } = this.state;
+    const seriesName = s => s.replace(/\s*#\d+$/, "");
+    const seriesOptions = ["All", ...Array.from(new Set(this.books.map(b => seriesName(b.series))))];
+    const tropeOptions = ["All", ...Array.from(new Set(this.books.flatMap(b => b.tropes))).sort()];
+    const dirMult = sortDir === "asc" ? 1 : -1;
+    const filteredBooks = this.books
+      .filter(b =>
+        (seriesFilter === "All" || seriesName(b.series) === seriesFilter) &&
+        (tropeFilter === "All" || b.tropes.includes(tropeFilter))
+      )
+      .sort((a, b) => dirMult * ((sortBy === "date" ? a.releaseYear - b.releaseYear : a.order - b.order)));
+    const setSort = key => () => this.setState(s => ({
+      sortBy: key,
+      sortDir: s.sortBy === key ? (s.sortDir === "asc" ? "desc" : "asc") : "asc"
+    }));
+    return {
+      newsletterOpen: this.state.newsletterOpen,
+      openNewsletter: () => this.setState({ newsletterOpen: true }),
+      closeNewsletter: () => this.setState({ newsletterOpen: false }),
+      stopPropagation: (e) => e.stopPropagation(),
+      seriesFilter, tropeFilter, seriesOptions, tropeOptions, filteredBooks,
+      sortBy, sortDir,
+      hasResults: filteredBooks.length > 0,
+      noResults: filteredBooks.length === 0,
+      onSeriesChange: (e) => this.setState({ seriesFilter: e.target.value }),
+      onTropeChange: (e) => this.setState({ tropeFilter: e.target.value }),
+      onSortOrder: setSort("order"),
+      onSortDate: setSort("date"),
+      orderArrow: sortBy === "order" ? (sortDir === "asc" ? "▲" : "▼") : "",
+      dateArrow: sortBy === "date" ? (sortDir === "asc" ? "▲" : "▼") : ""
+    };
+  }
+}
+</script>
+</body>
+</html>
