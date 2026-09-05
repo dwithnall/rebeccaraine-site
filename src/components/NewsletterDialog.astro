@@ -1,0 +1,102 @@
+---
+---
+
+<dialog id="newsletter-dialog" class="newsletter-dialog">
+  <button type="button" class="close" data-close-newsletter aria-label="Close">×</button>
+  <p class="title">Subscribe to my newsletter</p>
+  <p class="subtitle">Join my mailing list to receive the latest news and updates.</p>
+  <form method="dialog" class="newsletter-form">
+    <input type="text" name="name" placeholder="Name" autocomplete="name" />
+    <input type="email" name="email" placeholder="Email" autocomplete="email" required />
+    <button type="submit" class="submit">Subscribe</button>
+  </form>
+  <p class="promise">I solemnly swear that I will not give your email address to anyone else. Ever.</p>
+</dialog>
+
+<style>
+  .newsletter-dialog {
+    background: var(--bg);
+    color: var(--ink);
+    border: none;
+    border-radius: 6px;
+    padding: 40px;
+    max-width: 420px;
+    width: 90%;
+    position: relative;
+  }
+
+  .newsletter-dialog::backdrop {
+    background: oklch(20% 0.02 55 / 0.55);
+  }
+
+  .close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--muted);
+    line-height: 1;
+    padding: 0;
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 19px;
+    margin: 0 0 8px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .newsletter-form input {
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--white);
+  }
+
+  .submit {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 12px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .promise {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 16px 0 0;
+  }
+</style>
+
+<script>
+  const dialog = document.getElementById('newsletter-dialog') as HTMLDialogElement | null;
+  if (dialog) {
+    document.querySelectorAll('[data-open-newsletter]').forEach((btn) => {
+      btn.addEventListener('click', () => dialog.showModal());
+    });
+    dialog.querySelector('[data-close-newsletter]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  }
+</script>

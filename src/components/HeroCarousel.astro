@@ -1,0 +1,104 @@
+---
+import { Image } from 'astro:assets';
+import connor from '../assets/hero/connor.webp';
+import dante from '../assets/hero/dante.webp';
+import johnny from '../assets/hero/johnny.webp';
+import patrick from '../assets/hero/patrick.webp';
+import toni from '../assets/hero/toni.webp';
+
+const heroImages = [connor, dante, johnny, patrick, toni];
+---
+
+<section class="hero" aria-label="Featured titles">
+  <div class="media" aria-hidden="true">
+    {
+      heroImages.map((img, i) => (
+        <Image
+          src={img}
+          alt=""
+          class="hero-image"
+          data-hero-image
+          class:list={[{ 'is-active': i === 0 }]}
+          loading={i === 0 ? 'eager' : 'lazy'}
+        />
+      ))
+    }
+    <div class="scrim"></div>
+  </div>
+  <div class="panel">
+    <div class="panel-inner">
+      <img src="/images/rebeccaraine-logo-wide.svg" alt="Rebecca Raine" class="wordmark" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .media {
+    position: absolute;
+    inset: 0;
+  }
+
+  :global(.hero-image) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    opacity: 0;
+    transition: opacity 2.5s ease;
+  }
+
+  :global(.hero-image.is-active) {
+    opacity: 1;
+  }
+
+  .scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      var(--primary-ultra-dark) 0%,
+      rgba(43, 8, 8, 0.75) 30%,
+      rgba(43, 8, 8, 0.25) 55%,
+      rgba(43, 8, 8, 0.1) 75%
+    );
+  }
+
+  .panel {
+    position: relative;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 40px;
+  }
+
+  .panel-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .wordmark {
+    width: 100%;
+    display: block;
+  }
+</style>
+
+<script>
+  const images = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-image]'));
+  if (images.length > 1) {
+    let index = 0;
+    setInterval(() => {
+      images[index].classList.remove('is-active');
+      index = (index + 1) % images.length;
+      images[index].classList.add('is-active');
+    }, 10000);
+  }
+</script>

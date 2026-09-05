@@ -1,0 +1,41 @@
+:root {
+  --bg: oklch(97.5% 0.012 75);
+  --ink: oklch(21% 0.02 55);
+  --muted: oklch(48% 0.018 55);
+  --primary: #8e0000;
+  --primary-hover: #050101;
+  --primary-ultra-light: #fbe9e9;
+  --primary-ultra-dark: #2b0808;
+  --primary-light: #f4bebe;
+  --white: #fff;
+  --black: #000;
+  --accent: var(--primary);
+  --card: oklch(99% 0.006 75);
+  --line: oklch(89% 0.014 70);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Playfair Display', serif;
+}
