@@ -1,4 +1,7 @@
 ---
+const path = Astro.url.pathname;
+const isBooks = path.startsWith('/books');
+const isArticles = path.startsWith('/articles');
 ---
 
 <aside class="sidebar">
@@ -7,8 +10,8 @@
       <img src="/images/rebeccaraine-logo-wm-inv.svg" alt="Rebecca Raine Logo" />
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="/books">Books</a>
-      <a href="/articles">Articles</a>
+      <a href="/books" class:list={[{ active: isBooks }]} aria-current={isBooks ? 'page' : undefined}>Books</a>
+      <a href="/articles" class:list={[{ active: isArticles }]} aria-current={isArticles ? 'page' : undefined}>Articles</a>
       <a href="/#contact">Contact</a>
     </nav>
   </div>
@@ -89,6 +92,11 @@
 
   .nav a:hover {
     color: var(--white);
+  }
+
+  .nav a.active {
+    color: var(--white);
+    font-weight: 700;
   }
 
   .bottom {

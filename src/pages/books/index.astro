@@ -1,0 +1,328 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const seriesName = (series: string) => series.replace(/\s*#\d+$/, '');
+
+const books = (await getCollection('books')).sort((a, b) => a.data.order - b.data.order);
+
+const seriesOptions = ['All', ...Array.from(new Set(books.map((b) => seriesName(b.data.series)))).sort()];
+const tropeOptions = ['All', ...Array.from(new Set(books.flatMap((b) => b.data.tropes))).sort()];
+---
+
+<SiteLayout title="Books — Rebecca Raine" description="Browse the full bibliography of Rebecca Raine's contemporary romance novels.">
+  <section class="page-head">
+    <p class="eyebrow">Bibliography</p>
+    <h1>Books</h1>
+  </section>
+
+  <section class="filters">
+    <label class="filter">
+      Series
+      <select id="series-filter">
+        {seriesOptions.map((s) => <option value={s}>{s}</option>)}
+      </select>
+    </label>
+    <label class="filter">
+      Tropes
+      <select id="trope-filter">
+        {tropeOptions.map((t) => <option value={t}>{t}</option>)}
+      </select>
+    </label>
+    <div class="sort">
+      <span class="sort-label">Sort</span>
+      <button type="button" id="sort-order" class="sort-btn">
+        <span aria-hidden="true">☰</span> Series Order <span class="arrow">▲</span>
+      </button>
+      <button type="button" id="sort-date" class="sort-btn">
+        <span aria-hidden="true">▦</span> Release Date <span class="arrow"></span>
+      </button>
+    </div>
+  </section>
+
+  <section class="results">
+    <div id="books-grid" class="books-grid">
+      {
+        books.map((book) => (
+          <article
+            class="book-card"
+            data-series={seriesName(book.data.series)}
+            data-tropes={book.data.tropes.join('|')}
+            data-order={book.data.order}
+            data-year={book.data.releaseYear}
+          >
+            <a href={`/books/${book.id}`} class="cover-link">
+              <Image src={book.data.cover} alt={`${book.data.title} — cover art`} class="cover" />
+            </a>
+            <p class="series-label">{book.data.series}</p>
+            <h3>
+              <a href={`/books/${book.id}`}>{book.data.title}</a>
+            </h3>
+            <p class="blurb">{book.data.blurb}</p>
+            <div class="tropes">
+              {book.data.tropes.map((t) => (
+                <span class="trope">{t}</span>
+              ))}
+            </div>
+            <div class="links">
+              <a href={`/books/${book.id}`} class="more-link">More</a>
+              <a href={book.data.amazon} target="_blank" rel="noopener noreferrer" class="ext-link">Amazon</a>
+              <a href={book.data.goodreads} target="_blank" rel="noopener noreferrer" class="ext-link">Goodreads</a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <p id="no-results" class="no-results" hidden>No books match those filters.</p>
+  </section>
+</SiteLayout>
+
+<style>
+  .page-head {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 56px 40px 20px;
+    box-sizing: border-box;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  .page-head h1 {
+    font-size: clamp(30px, 4.5vw, 44px);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .filters {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 40px 24px;
+    box-sizing: border-box;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .filter select {
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--white);
+    color: var(--ink);
+  }
+
+  .sort {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .sort-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .sort-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--white);
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .arrow {
+    display: inline-block;
+    min-width: 0.9em;
+  }
+
+  .results {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 40px 100px;
+    box-sizing: border-box;
+  }
+
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
+  }
+
+  .cover-link {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    display: block;
+  }
+
+  .series-label {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  .book-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+
+  .book-card h3 a {
+    text-decoration: none;
+  }
+
+  .blurb {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+
+  .tropes {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .trope {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--primary-ultra-light);
+    color: var(--primary);
+  }
+
+  .links {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .more-link {
+    text-decoration: none;
+    color: var(--accent);
+  }
+
+  .ext-link {
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1px;
+  }
+
+  .no-results {
+    color: var(--muted);
+    font-size: 15px;
+    padding: 40px 0;
+    text-align: center;
+  }
+</style>
+
+<script>
+  type SortBy = 'order' | 'date';
+
+  const grid = document.querySelector<HTMLElement>('#books-grid');
+  const noResults = document.querySelector<HTMLElement>('#no-results');
+  const seriesSelect = document.querySelector<HTMLSelectElement>('#series-filter');
+  const tropeSelect = document.querySelector<HTMLSelectElement>('#trope-filter');
+  const orderBtn = document.querySelector<HTMLButtonElement>('#sort-order');
+  const dateBtn = document.querySelector<HTMLButtonElement>('#sort-date');
+
+  if (grid && noResults && seriesSelect && tropeSelect && orderBtn && dateBtn) {
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('.book-card'));
+    const orderArrow = orderBtn.querySelector<HTMLElement>('.arrow');
+    const dateArrow = dateBtn.querySelector<HTMLElement>('.arrow');
+
+    let sortBy: SortBy = 'order';
+    let sortDir: 'asc' | 'desc' = 'asc';
+
+    function update() {
+      const series = seriesSelect!.value;
+      const trope = tropeSelect!.value;
+      const dir = sortDir === 'asc' ? 1 : -1;
+
+      const visible = cards.filter((card) => {
+        const cardSeries = card.dataset.series ?? '';
+        const cardTropes = (card.dataset.tropes ?? '').split('|');
+        return (series === 'All' || cardSeries === series) && (trope === 'All' || cardTropes.includes(trope));
+      });
+
+      visible.sort((a, b) => {
+        const av = Number(sortBy === 'date' ? a.dataset.year : a.dataset.order);
+        const bv = Number(sortBy === 'date' ? b.dataset.year : b.dataset.order);
+        return dir * (av - bv);
+      });
+
+      cards.forEach((card) => {
+        card.hidden = true;
+      });
+      visible.forEach((card) => {
+        card.hidden = false;
+        grid!.appendChild(card);
+      });
+
+      noResults!.hidden = visible.length > 0;
+      grid!.hidden = visible.length === 0;
+
+      if (orderArrow) orderArrow.textContent = sortBy === 'order' ? (sortDir === 'asc' ? '▲' : '▼') : '';
+      if (dateArrow) dateArrow.textContent = sortBy === 'date' ? (sortDir === 'asc' ? '▲' : '▼') : '';
+    }
+
+    seriesSelect.addEventListener('change', update);
+    tropeSelect.addEventListener('change', update);
+    orderBtn.addEventListener('click', () => {
+      sortDir = sortBy === 'order' ? (sortDir === 'asc' ? 'desc' : 'asc') : 'asc';
+      sortBy = 'order';
+      update();
+    });
+    dateBtn.addEventListener('click', () => {
+      sortDir = sortBy === 'date' ? (sortDir === 'asc' ? 'desc' : 'asc') : 'asc';
+      sortBy = 'date';
+      update();
+    });
+
+    update();
+  }
+</script>
