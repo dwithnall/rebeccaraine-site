@@ -14,6 +14,7 @@ const books = defineCollection({
       amazon: z.string().url(),
       goodreads: z.string().url(),
       cover: image(),
+      excerpt: z.string(),
     }),
 });
 

@@ -44,12 +44,7 @@ const { Content } = await render(book);
 
   <section class="excerpt">
     <h2>Peek Inside...</h2>
-    <div class="excerpt-card">
-      <p>
-        A preview passage from {book.data.title} will sit here once the excerpt is ready to publish — a few paragraphs
-        pulled straight from the opening pages, enough to give readers a taste of the story before they buy.
-      </p>
-    </div>
+    <div class="excerpt-card" set:html={book.data.excerpt} />
     <p class="buy-note">
       Read it now on <a href={book.data.amazon} target="_blank" rel="noopener noreferrer">Amazon Kindle and Kindle Unlimited</a>
     </p>
@@ -170,12 +165,15 @@ const { Content } = await render(book);
     padding: 36px;
   }
 
-  .excerpt-card p {
-    font-style: italic;
+  .excerpt-card :global(p) {
     font-size: 15px;
     line-height: 1.8;
-    color: var(--muted);
-    margin: 0;
+    color: var(--ink);
+    margin: 0 0 18px;
+  }
+
+  .excerpt-card :global(p:last-child) {
+    margin-bottom: 0;
   }
 
   .buy-note {
