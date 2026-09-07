@@ -1,9 +1,9 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  const articles = (await getCollection('articles')).sort((a, b) => a.data.order - b.data.order);
+  const articles = (await getCollection('articles')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   return articles.map((article, i) => ({
     params: { id: article.id },
     props: { article, prev: articles[i - 1] ?? null },
@@ -16,6 +16,14 @@ interface Props {
 }
 
 const { article, prev } = Astro.props;
+const { Content } = await render(article);
+
+const formattedDate = article.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const category = article.data.tags[0] ?? 'Article';
 ---
 
 <SiteLayout title={`${article.data.title} — Rebecca Raine`} description={article.data.excerpt}>
@@ -24,26 +32,23 @@ const { article, prev } = Astro.props;
   </div>
 
   <article class="article-detail">
-    <p class="eyebrow">Article</p>
+    <p class="eyebrow">{category} &middot; {formattedDate}</p>
     <h1>{article.data.title}</h1>
     <span class="hero-placeholder">{article.data.title} — hero photo</span>
 
     <div class="body">
-      <p>
-        Every long-form piece on this site follows the same pattern: a short standfirst, a hero image, then several
-        paragraphs of body copy building toward a close. This page shows that pattern in place of the original post
-        text, ready to be swapped for real content in the CMS.
-      </p>
-      <p>
-        A typical entry runs four to six paragraphs — enough for a comfortable five-minute read. Paragraphs stay
-        short, sentences vary in length, and the occasional line break gives the page room to breathe.
-      </p>
-      <p>
-        Toward the middle of a post, a supporting image or two sometimes breaks up the text — always full-width,
-        always with room for a caption underneath if one is needed.
-      </p>
-      <p>Posts close with a short final thought and, where relevant, a nudge toward a related book or the newsletter signup.</p>
+      <Content />
     </div>
+
+    {
+      article.data.tags.length > 0 && (
+        <div class="tags">
+          {article.data.tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )
+    }
   </article>
 
   <nav class="prev-next">
@@ -119,14 +124,58 @@ const { article, prev } = Astro.props;
     box-sizing: border-box;
   }
 
-  .body p {
+  .body :global(p) {
     font-size: 16px;
     line-height: 1.85;
     margin: 0 0 22px;
   }
 
-  .body p:last-child {
+  .body :global(h3) {
+    font-size: 21px;
+    font-weight: 600;
+    margin: 32px 0 16px;
+  }
+
+  .body :global(h4) {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 28px 0 14px;
+  }
+
+  .body :global(ul),
+  .body :global(ol) {
+    font-size: 16px;
+    line-height: 1.85;
+    margin: 0 0 22px;
+    padding-left: 24px;
+  }
+
+  .body :global(li) {
+    margin-bottom: 6px;
+  }
+
+  .body :global(a) {
+    color: var(--accent);
+  }
+
+  .body :global(p:last-child) {
     margin-bottom: 0;
+  }
+
+  .tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 36px 0 0;
+  }
+
+  .tag {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    color: var(--muted);
   }
 
   .prev-next {

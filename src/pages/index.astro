@@ -8,7 +8,7 @@ const books = await getCollection('books');
 const [featuredBook] = [...books].sort((a, b) => b.data.order - a.data.order);
 const { Content: BookContent } = await render(featuredBook);
 
-const articles = (await getCollection('articles')).sort((a, b) => a.data.order - b.data.order);
+const articles = (await getCollection('articles')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const recentArticles = articles.slice(0, 3);
 ---
 
