@@ -1,0 +1,191 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+  const books = await getCollection('books');
+  return books.map((book) => ({
+    params: { id: book.id },
+    props: { book },
+  }));
+}
+
+interface Props {
+  book: CollectionEntry<'books'>;
+}
+
+const { book } = Astro.props;
+const { Content } = await render(book);
+---
+
+<SiteLayout title={`${book.data.title} — Rebecca Raine`} description={book.data.blurb}>
+  <div class="back-link">
+    <a href="/books">&larr; All Books</a>
+  </div>
+
+  <section class="book-detail">
+    <div class="side">
+      <Image src={book.data.cover} alt={`${book.data.title} — cover art`} class="cover" />
+      <div class="buy-links">
+        <a href={book.data.amazon} target="_blank" rel="noopener noreferrer" class="btn-primary">Amazon</a>
+        <a href={book.data.goodreads} target="_blank" rel="noopener noreferrer" class="btn-outline">Goodreads</a>
+      </div>
+    </div>
+    <div class="info">
+      <p class="series">{book.data.series}</p>
+      <h1>{book.data.title}</h1>
+      <p class="tagline">{book.data.blurb}</p>
+      <div class="pov">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <section class="excerpt">
+    <h2>Peek Inside...</h2>
+    <div class="excerpt-card" set:html={book.data.excerpt} />
+    <p class="buy-note">
+      Read it now on <a href={book.data.amazon} target="_blank" rel="noopener noreferrer">Amazon Kindle and Kindle Unlimited</a>
+    </p>
+  </section>
+</SiteLayout>
+
+<style>
+  .back-link {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 24px 40px 0;
+    box-sizing: border-box;
+  }
+
+  .back-link a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .book-detail {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 28px 40px 60px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(200px, 280px) 1fr;
+    gap: 52px;
+  }
+
+  .cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 24px;
+  }
+
+  .buy-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    text-align: center;
+    padding: 13px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .btn-outline {
+    border: 1px solid var(--line);
+    text-align: center;
+    padding: 13px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .series {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+
+  .info h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+
+  .tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--muted);
+    margin: 0 0 28px;
+  }
+
+  .pov :global(p) {
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 0 20px;
+  }
+
+  .pov :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .excerpt {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 40px 90px;
+    box-sizing: border-box;
+  }
+
+  .excerpt h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 24px;
+  }
+
+  .excerpt-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 36px;
+  }
+
+  .excerpt-card :global(p) {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink);
+    margin: 0 0 18px;
+  }
+
+  .excerpt-card :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .buy-note {
+    text-align: center;
+    margin: 32px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .buy-note a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>
